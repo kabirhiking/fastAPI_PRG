@@ -6,12 +6,13 @@ app = FastAPI()
 class Item(BaseModel):
     name: str
     price: float
-    is_offer: bool = True
+    password: str = "Don't show this"
     
-@app.post("/items")
+class ItemResponse(BaseModel):
+    name: str
+    price: float
+    is_offer: bool = False
+    
+@app.post("/items/", response_model=ItemResponse)  
 def create_item(item:Item):
-   
-    return {
-        'message': "item created",
-        'item' : item
-    }
+   return item
